@@ -1,0 +1,105 @@
+name: Installer UAT
+
+# Protects the primary path new users take to install With.
+#
+# Two guarantees, on every push and every day:
+#   1. release-asset  -- the checked-in installer scripts fetch the latest
+#                        GitHub release binary and produce a WORKING compiler,
+#                        on macOS / Linux / Windows. Covers issue #1144: the
+#                        release must actually be installable.
+#   2. hosted         -- the exact command the website tells users to run,
+#                        `curl -fsSL https://withlang.org/installer/install.sh | sh`
+#                        (and the Windows equivalent), end-to-end against the
+#                        live site. Runs on a schedule so hosting regressions
+#                        surface within a day, not when a user hits them.
+
+on:
+  push:
+    branches: [main]
+    paths: ["installer/**", ".github/workflows/installer-uat.yml"]
+  pull_request:
+    paths: ["installer/**", ".github/workflows/installer-uat.yml"]
+  schedule:
+    - cron: "17 8 * * *"   # daily, 08:17 UTC
+  workflow_dispatch:
+
+concurrency:
+  group: installer-uat-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 1) The checked-in scripts install the latest RELEASE binary and it runs.
+  release-asset:
+    name: release-asset (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install With (Unix installer)
+        if: runner.os != 'Windows'
+        env:
+          WITH_INSTALL_DIR: ${{ runner.temp }}/withbin
+        run: |
+          set -eu
+          sh ./installer/install.sh
+          echo "$WITH_INSTALL_DIR" >> "$GITHUB_PATH"
+
+      - name: Install With (Windows installer)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          WITH_INSTALL_DIR: ${{ runner.temp }}\withbin
+        run: |
+          $ErrorActionPreference = "Stop"
+          & ./installer/install.ps1
+          Add-Content -Path $env:GITHUB_PATH -Value $env:WITH_INSTALL_DIR
+
+      - name: Verify the compiler works
+        shell: bash
+        run: |
+          set -eu
+          with version
+          out="$(with -e 'print("installer-uat-ok")')"
+          echo "compiler said: $out"
+          test "$out" = "installer-uat-ok"
+
+  # 2) The command the website hands users, against the live site.
+  hosted:
+    name: hosted (${{ matrix.os }})
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - name: Install With from withlang.org (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          set -eu
+          export WITH_INSTALL_DIR="$RUNNER_TEMP/withbin"
+          curl -fsSL https://withlang.org/installer/install.sh | sh
+          echo "$WITH_INSTALL_DIR" >> "$GITHUB_PATH"
+
+      - name: Install With from withlang.org (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          WITH_INSTALL_DIR: ${{ runner.temp }}\withbin
+        run: |
+          $ErrorActionPreference = "Stop"
+          irm https://withlang.org/installer/install.ps1 | iex
+          Add-Content -Path $env:GITHUB_PATH -Value $env:WITH_INSTALL_DIR
+
+      - name: Verify the compiler works
+        shell: bash
+        run: |
+          set -eu
+          with version
+          out="$(with -e 'print("installer-uat-ok")')"
+          echo "compiler said: $out"
+          test "$out" = "installer-uat-ok"
