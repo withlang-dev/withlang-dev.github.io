@@ -375,12 +375,12 @@ footer{border-top:1px solid var(--border);padding:56px 0 40px;color:var(--muted)
     </div>
     <div class="window hello reveal">
       <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="win-name">hello.w</span></div>
-<pre class="code"><span class="k">fn</span> <span class="fn">main</span>:
-    <span class="fn">print</span>(<span class="s">"Hello, World!"</span>)
-
-<span class="c">// a function that returns i32 needs no trailing 0.</span>
-<span class="c">// a return type the body makes obvious is inferred.</span>
+<pre class="code"><span class="c">// the body makes the return type obvious, so it's inferred.</span>
 <span class="k">fn</span> <span class="fn">shout</span>(s: <span class="t">str</span>): s <span class="op">++</span> <span class="s">"!"</span>
+
+<span class="c">// main returns i32 to the OS &mdash; no trailing 0 needed.</span>
+<span class="k">fn</span> <span class="fn">main</span>:
+    <span class="fn">print</span>(<span class="fn">shout</span>(<span class="s">"Hello, World"</span>))
 </pre>
       <div class="win-run"><span class="p">&#9656; with run hello.w</span>&nbsp;&nbsp;<span class="out">Hello, World!</span></div>
     </div>
