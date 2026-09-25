@@ -97,7 +97,10 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:co
 .hero .wrap{position:relative;z-index:1}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
 .demo{margin:0}
-.demo video,.demo img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--border2);box-shadow:var(--shadow);background:#282c34}
+.demo video,.demo img,.demo video{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--border2);box-shadow:var(--shadow);background:#282c34}
+img,video{max-width:100%}
+/* Grid children keep their intrinsic minimum width by default; a nowrap line or a sized video would hold a column open past the viewport. */
+.hero-grid>*,.showcase>*,.install-grid>*,.cards>*,.founder>*,.wipe-intro>*,.wipe-details>*,.foot-grid>*{min-width:0}
 .demo figcaption{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.5rem;margin-top:.9rem;font-family:var(--mono);font-size:.78rem;color:var(--faint)}
 .demo figcaption a{color:var(--accent)}
 .demo .live{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
@@ -106,7 +109,7 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:co
 .hero h1{font-size:clamp(2.3rem,5vw,3.6rem);margin-bottom:1.1rem}
 .hero p.lede{font-size:1.16rem;color:var(--muted);max-width:34ch;margin-bottom:1.7rem}
 .hero-cta{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1.5rem}
-.subnote{color:var(--faint);font-size:.86rem;display:flex;align-items:center;gap:.5rem}
+.subnote{color:var(--faint);font-size:.86rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
 .subnote code{color:var(--muted)}
 
 /* install command box */
@@ -273,10 +276,18 @@ footer{border-top:1px solid var(--border);padding:56px 0 40px;color:var(--muted)
   .mobile>a{display:block;padding:.75rem 0;color:var(--text);font-weight:500;border-bottom:1px solid var(--border)}
 }
 @media(max-width:560px){
+  .wrap{padding:0 16px}
   .foot-grid{grid-template-columns:1fr}
   .cta{padding:36px 24px}
   .founder{padding:26px}
+  .eyebrow{white-space:normal;max-width:100%;line-height:1.4}
+  .hero h1{font-size:2.1rem;letter-spacing:-.03em}
+  .hero-cta .btn{width:100%;justify-content:center}
+  pre{font-size:.82rem;padding:.9rem 1rem}
+  .cmd{font-size:.82rem}
+  .wipe-intro h2{font-size:2.2rem}
 }
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 </style>
 </head>
 <body>

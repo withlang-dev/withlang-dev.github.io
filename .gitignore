@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Editors and agents
+.claude/
+.vscode/
+.idea/
+
+# Node tooling, if a build step is ever added
+node_modules/
+
+# Local previews and scratch
+*.log
+*.tmp
