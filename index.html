@@ -163,6 +163,24 @@ section{padding:76px 0;position:relative}
 .card p{color:var(--muted);font-size:.97rem}
 .card p b{color:var(--text);font-weight:600}
 
+/* built with With */
+#wipe{scroll-margin-top:86px;background:linear-gradient(160deg,color-mix(in srgb,var(--accent2) 7%,var(--bg)),var(--bg));border-block:1px solid var(--border)}
+.wipe-intro{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:30px}
+.wipe-intro .section-head{margin:0}
+.wipe-intro h2{font-size:clamp(2.5rem,5vw,4rem);letter-spacing:-.045em}
+.wipe-intro h2 span{color:var(--accent)}
+.wipe-copy p{color:var(--muted);font-size:1.03rem;margin-bottom:20px}
+.wipe-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;list-style:none}
+.wipe-tags li{font-family:var(--mono);font-size:.74rem;padding:.3rem .6rem;border:1px solid var(--border2);border-radius:6px;color:var(--muted);background:var(--surface)}
+.wipe-film{margin:0;border:1px solid var(--border2);border-radius:18px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.wipe-film video{display:block;width:100%;height:auto;aspect-ratio:1218/810;background:#050810}
+.wipe-film figcaption{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:16px 20px;color:var(--muted);font-size:.82rem}
+.wipe-film figcaption a{color:var(--accent)}
+.wipe-details{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:30px}
+.wipe-details h3{font-size:1.05rem;margin-bottom:8px}
+.wipe-details p{font-size:.92rem;color:var(--muted)}
+@media(max-width:900px){.wipe-intro{grid-template-columns:1fr;gap:20px}.wipe-details{grid-template-columns:1fr;gap:20px}}
+
 /* code showcase */
 .showcase{display:grid;grid-template-columns:.9fr 1.1fr;gap:36px;align-items:start}
 .tablist{display:flex;flex-direction:column;gap:8px}
@@ -264,6 +282,7 @@ footer{border-top:1px solid var(--border);padding:56px 0 40px;color:var(--muted)
       <a href="#why">Why With</a>
       <a href="#start">Get started</a>
       <a href="#code">Examples</a>
+      <a href="#wipe">Showcase</a>
       <a href="#install">Install</a>
       <a href="https://github.com/withlang-dev/with/blob/main/docs/with-specification.md" target="_blank" rel="noopener">Docs</a>
       <a href="#founder">Founder</a>
@@ -289,6 +308,7 @@ footer{border-top:1px solid var(--border);padding:56px 0 40px;color:var(--muted)
     <a href="#why">Why With</a>
     <a href="#start">Get started</a>
     <a href="#code">Examples</a>
+    <a href="#wipe">Showcase</a>
     <a href="#install">Install</a>
     <a href="https://github.com/withlang-dev/with/blob/main/docs/with-specification.md" target="_blank" rel="noopener">Docs</a>
     <a href="#founder">Founder</a>
@@ -454,6 +474,52 @@ footer{border-top:1px solid var(--border);padding:56px 0 40px;color:var(--muted)
     <div class="start-note reveal">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
       <div>This exact three-command flow is one of With's <b>release smoke tests</b> &mdash; it runs on every published build and renders the spiral to verify the pixels actually appear. The getting-started path can't quietly rot. <a href="https://github.com/withlang-dev/with/tree/main/build/release_uat_fixtures" target="_blank" rel="noopener">See the fixture &rarr;</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- BUILT WITH WITH -->
+<section id="wipe" aria-labelledby="wipe-title">
+  <div class="wrap">
+    <div class="wipe-intro">
+      <div class="section-head">
+        <div class="kick">Built with With</div>
+        <h2 id="wipe-title">WIPE<span>: SURVIVAL</span></h2>
+        <p>One arena. One hit. One more try.</p>
+        <ul class="wipe-tags" aria-label="Project details">
+          <li>With + raylib</li>
+          <li>Native desktop</li>
+          <li>Survival prototype</li>
+        </ul>
+      </div>
+      <div class="wipe-copy">
+        <p>A twin-stick survival game built in With. Dodge a relentless swarm, carve through luminous wireframes, and light up a reactive grid &mdash; all to a bass-led ambient house soundtrack.</p>
+        <a class="btn btn-primary" href="https://github.com/withlang-dev/wipe" target="_blank" rel="noopener">Explore WIPE on GitHub <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+    <figure class="wipe-film">
+      <video controls playsinline preload="none" poster="assets/wipe-poster.jpg" width="1218" height="810" aria-label="WIPE: SURVIVAL gameplay showcase" aria-describedby="wipe-caption">
+        <source src="assets/wipe-showcase.mp4" type="video/mp4">
+        <a href="assets/wipe-showcase.mp4">Watch the WIPE: SURVIVAL showcase video.</a>
+      </video>
+      <figcaption id="wipe-caption">
+        <span>16 seconds in the arena &middot; gameplay capture</span>
+        <a href="assets/wipe-showcase.mp4">Open video <span aria-hidden="true">&nearr;</span></a>
+      </figcaption>
+    </figure>
+    <div class="wipe-details">
+      <div>
+        <h3>Keep moving. Keep firing.</h3>
+        <p>Automatic fire, one-hit kills, and immediate retries. Move and aim with keyboard and mouse or a twin-stick controller.</p>
+      </div>
+      <div>
+        <h3>Arena meets atmosphere.</h3>
+        <p>Gaussian bloom, directional sparks, and a reactive grid turn every close call into a burst of light.</p>
+      </div>
+      <div>
+        <h3>Go from pixels to source.</h3>
+        <p>Explore the With simulation, rendering, shaders, and audio &mdash; then build and play it yourself.</p>
+      </div>
     </div>
   </div>
 </section>
